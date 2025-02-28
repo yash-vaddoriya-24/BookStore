@@ -1,0 +1,11 @@
+<div class="container mt-4">
+  <%= search_form_for @q, url: books_path, method: :get, html: { class: "d-flex mb-3" } do |f| %>
+    <%= f.search_field :name_or_author_cont, class: "form-control me-2", placeholder: "Search by Name or Author..." %>
+    <%= f.submit "🔍 Search", class: "btn btn-primary", style: "border-radius: 10px;"%>
+    <%= sort_link(@q, :name, 'Sort', default_order: :desc, class: "btn btn-warning", style: "margin-left: 9px; border-radius: 10px;") %>
+    <%= link_to "Export",
+                books_path(format: 'csv', q: params[:q]&.to_unsafe_h || {}, s: params[:s], page: params[:page]),
+                class: "btn btn-success", style: "margin-left: 9px; border-radius: 10px;" %>
+
+<% end %>
+</div>
