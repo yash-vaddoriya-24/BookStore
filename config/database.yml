@@ -15,4 +15,15 @@ test:
 
 
 production:
-  <<: *default
+
+  primary:
+    <<: *default
+
+  queue:
+    <<: *default
+
+  cable:
+    <<: *default
+
+  cache:
+    <<: *default
