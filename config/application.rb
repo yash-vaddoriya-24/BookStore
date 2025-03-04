@@ -27,6 +27,5 @@ module Practice
 
     # Ensure Propshaft is being used (default in Rails 7)
     config.assets.enabled = false
-
   end
 end

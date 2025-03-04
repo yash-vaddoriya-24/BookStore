@@ -1,0 +1,12 @@
+<turbo-frame id="books">
+  <div class="container mt-4">
+    <h2><%= @book.title %></h2>
+    <p><%= image_tag @book.image %></p>
+    <p><strong>Author:</strong> <%= @book.author %></p>
+    <p><strong>ISBN:</strong> <%= @book.isbn %></p>
+    <p><strong>Price:</strong> ₹<%= @book.price %></p>
+    <p><strong>Stock:</strong> <%= @book.stock %></p>
+    <p><strong>Category:</strong> <%= @book.category.name if @book.category %></p>
+    <p><strong>Description:</strong> <%= @book.description %></p>
+  </div>
+</turbo-frame>
