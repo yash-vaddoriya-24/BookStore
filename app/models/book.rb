@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class Book < ApplicationRecord
   acts_as_paranoid
@@ -16,12 +16,12 @@ class Book < ApplicationRecord
 
   # Allow Ransack to search specific attributes
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "created_at", "id", "isbn", "title", "price", "updated_at"]
+    [ "author", "created_at", "id", "isbn", "title", "price", "updated_at" ]
   end
 
   # Allow searching associations
   def self.ransackable_associations(auth_object = nil)
-    ["category", "orders", "reviews"]
+    [ "category", "orders", "reviews" ]
   end
 
   # Export books to CSV

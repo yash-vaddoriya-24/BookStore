@@ -2,10 +2,10 @@ require "prawn"
 
 class BooksController < ApplicationController
     before_action :authenticate_user!  # Ensure user is authenticated first
-    before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy] # Apply only for actions that require admin access
+    before_action :authorize_admin, only: [ :new, :create, :edit, :update, :destroy ] # Apply only for actions that require admin access
 
-    before_action :bookAll, only: [:index, :show]
-    before_action :set_book, only: [:show, :edit, :update, :destroy, :preview]
+    before_action :bookAll, only: [ :index, :show ]
+    before_action :set_book, only: [ :show, :edit, :update, :destroy, :preview ]
     # before_action :set_user
 
     def show
@@ -134,5 +134,4 @@ class BooksController < ApplicationController
         redirect_to root_path and return
       end
     end
-
 end
