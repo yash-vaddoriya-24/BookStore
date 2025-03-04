@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Book Management System</title>
-</head>
-<body class="bg-light">
-  <%= render 'form', url: edit_book_path %>
-</body>
-</html>
+<%= turbo_frame_tag "books" do %>
+  <%= render 'form', book: @book %>
+<% end %>

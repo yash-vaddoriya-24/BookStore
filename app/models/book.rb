@@ -1,19 +1,31 @@
 require 'csv'
+
 class Book < ApplicationRecord
   acts_as_paranoid
 
-  # Allow Ransack to search only these attributes
+  has_one_attached :image
+  belongs_to :category
+  has_many :order_items, dependent: :destroy
+  has_many :orders, through: :order_items
+  has_many :reviews, dependent: :destroy
+
+  validates :title, presence: true
+  validates :author, presence: true
+  validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :isbn, presence: true, uniqueness: true
+
+  # Allow Ransack to search specific attributes
   def self.ransackable_attributes(auth_object = nil)
-    [ "author", "created_at", "id", "isbn", "name", "price", "updated_at" ]
+    ["author", "created_at", "id", "isbn", "title", "price", "updated_at"]
   end
 
-  # If using associations, also allow searching them (optional)
+  # Allow searching associations
   def self.ransackable_associations(auth_object = nil)
-    []
+    ["category", "orders", "reviews"]
   end
 
-  def self.to_csv(books)
-    puts books.inspect
+  # Export books to CSV
+  def self.to_csv(books = self.all)
     CSV.generate(headers: true) do |csv|
       csv << column_names
       books.each do |book|
@@ -21,5 +33,4 @@ class Book < ApplicationRecord
       end
     end
   end
-
 end

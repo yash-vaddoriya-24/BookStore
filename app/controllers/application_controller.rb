@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   puts "In Application Controller"
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-  # protect_from_forgery with: :exception
+  protect_from_forgery with: :exception
 
   protected
   def configure_permitted_parameters

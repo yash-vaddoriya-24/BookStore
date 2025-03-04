@@ -6,110 +6,96 @@
   <title>Library Management</title>
 
   <style>
-    body {
-      background: radial-gradient(circle at top, #121212, #1a1a1a);
-      color: white;
-    }
-    .hero {
-      background: url('https://source.unsplash.com/1600x900/?library,books') no-repeat center center/cover;
-      height: 50vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      font-size: 2rem;
-      font-weight: bold;
-      position: relative;
-      animation: fadeIn 2s ease-in-out;
-    }
-    .hero-overlay {
-      background: rgba(0, 0, 0, 0.6);
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-    }
-    
+      body {
+          background: radial-gradient(circle at top, #121212, #1a1a1a);
+          color: white;
+      }
 
-    .input-focus:focus {
-      border-color: cyan;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
-    }
-
-    .hero-content {
-      z-index: 2;
-      position: relative;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .book-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 20px;
-      transition: transform 0.3s ease-in-out;
-    }
-    .book-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0px 10px 20px rgba(0, 198, 255, 0.3);
-    }
-    .card-title {
-      color: cyan;
-    }
-    .search-bar {
-      margin: 20px auto;
-      width: 50%;
-    }
-    .book-form {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0px 4px 10px rgba(0, 198, 255, 0.3);
-    }
+      .book-form {
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 4px 10px rgba(0, 198, 255, 0.3);
+      }
   </style>
 </head>
 <body class="bg-dark">
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card book-form shadow-lg p-4 rounded" data-aos="zoom-in">
-          <h2 class="text-center mb-4 text-primary animated fadeIn">📚 Book Management System</h2>
-          
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card book-form shadow-lg p-4 rounded" data-aos="zoom-in">
+        <h2 class="text-center mb-4 text-primary animated fadeIn">📚 Book Management System</h2>
+
+        <%= turbo_frame_tag "books" do %>
           <%= form_with model: [@user, @book], class: "needs-validation", novalidate: true do |form| %>
             <div class="mb-3">
               <%= form.label :title, "Book Title", style: "color: white;", class: "form-label fw-bold animated fadeIn" %>
-              <%= form.text_field :name, class: "form-control input-focus", placeholder: "Enter book title", required: true %>
+              <%= form.text_field :title, class: "form-control input-focus", placeholder: "Enter book title", required: true %>
               <div class="invalid-feedback">Please enter a book title.</div>
             </div>
+
             <div class="mb-3">
-              <%= form.label :author, "Author Name", style: "color: white;" , class: "form-label fw-bold animated fadeIn" %>
+              <%= form.label :author, "Author Name", style: "color: white;", class: "form-label fw-bold animated fadeIn" %>
               <%= form.text_field :author, class: "form-control input-focus", placeholder: "Enter author name", required: true %>
               <div class="invalid-feedback">Please enter the author's name.</div>
             </div>
+
             <div class="mb-3">
-              <%= form.label :ISBN, "ISBN Number", style: "color: white;", class: "form-label fw-bold animated fadeIn" %>
+              <%= form.label :description, "Description", class: "form-label fw-bold animated fadeIn", style: "color: white;" %>
+              <%= form.text_area :description, class: "form-control input-focus", placeholder: "Enter Description", required: true %>
+              <div class="invalid-feedback">Please enter a description.</div>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :isbn, "ISBN Number", style: "color: white;", class: "form-label fw-bold animated fadeIn" %>
               <%= form.text_field :isbn, class: "form-control input-focus", placeholder: "Enter ISBN", required: true %>
               <div class="invalid-feedback">Please enter the ISBN number.</div>
             </div>
+
             <div class="mb-3">
               <%= form.label :price, "Book Price", style: "color: white;", class: "form-label fw-bold animated fadeIn" %>
               <%= form.number_field :price, class: "form-control input-focus", placeholder: "Enter price", required: true %>
               <div class="invalid-feedback">Please enter the price.</div>
             </div>
+
+            <div class="mb-3">
+              <%= form.label :stock, "Book Stock", style: "color: white;", class: "form-label fw-bold animated fadeIn" %>
+              <%= form.number_field :stock, class: "form-control input-focus", placeholder: "Enter number of books", required: true %>
+              <div class="invalid-feedback">Please enter the number of books in stock.</div>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :category_id, "Select Category", class: "form-label fw-bold text-light" %>
+              <%= form.select :category_id,
+                              options_from_collection_for_select(@categories || [], :id, :name, @book.category_id),
+                              { prompt: "Choose Category" },
+                              class: "form-control input-focus", required: true %>
+
+
+              <div class="invalid-feedback">Please select a category.</div>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :featured_image, "Upload Image", style: "display: block; color: white;", class: "form-label fw-bold animated fadeIn" %>
+              <%= form.file_field :image, accept: "image/*", class: "form-control input-focus", required: true %>
+              <div class="invalid-feedback">Please upload an image of the book.</div>
+            </div>
+
             <div class="d-grid mt-4">
               <%= form.submit class: "btn btn-primary btn-lg animated bounceInUp" %>
             </div>
           <% end %>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
     AOS.init();
-  </script>
+</script>
 </body>
 </html>
