@@ -15,4 +15,43 @@ test:
 
 
 production:
-  <<: *default
+
+  primary:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: threatingbrow
+    username: yash
+    password: 7lzn6vgXAKuBk0ljpp3OEwUvG8VGfVCr
+    host: dpg-cvc2kibtq21c73e5l8dg-a # Use TCP/IP instead of a Unix socket
+    port: 5432
+
+  queue:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: threatingbrow
+    username: yash
+    password: 7lzn6vgXAKuBk0ljpp3OEwUvG8VGfVCr
+    host: dpg-cvc2kibtq21c73e5l8dg-a # Use TCP/IP instead of a Unix socket
+    port: 5432
+
+  cable:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: threatingbrow
+    username: yash
+    password: 7lzn6vgXAKuBk0ljpp3OEwUvG8VGfVCr
+    host: dpg-cvc2kibtq21c73e5l8dg-a # Use TCP/IP instead of a Unix socket
+    port: 5432
+
+  cache:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    database: threatingbrow
+    username: yash
+    password: 7lzn6vgXAKuBk0ljpp3OEwUvG8VGfVCr
+    host: dpg-cvc2kibtq21c73e5l8dg-a # Use TCP/IP instead of a Unix socket
+    port: 5432
