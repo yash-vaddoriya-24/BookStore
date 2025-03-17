@@ -76,7 +76,7 @@ gem "rolify"
 
 gem "letter_opener", group: :development
 
-gem "pundit", "~> 2.4"
+gem "pundit", "~> 2.5"
 
 gem "acts_as_paranoid", "~> 0.10.3"
 
